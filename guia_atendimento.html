@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guia BIOS — Teclas de Acesso</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d0f14;
+    --surface: #13161e;
+    --surface2: #1a1e2a;
+    --border: #252935;
+    --border2: #2e3445;
+    --accent: #4f9eff;
+    --accent2: #7bc4ff;
+    --text: #e8ecf4;
+    --muted: #6b7591;
+    --muted2: #8b96b8;
+    --key-bg: #1e2333;
+    --key-border: #374060;
+    --key-shadow: #0a0c12;
+    --green: #4eca8b;
+    --amber: #f0b04a;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    min-height: 100vh;
+    padding: 0;
+    overflow-x: hidden;
+  }
+
+  /* Fundo com grid de pontos */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: radial-gradient(circle, #2a3050 1px, transparent 1px);
+    background-size: 28px 28px;
+    opacity: 0.35;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  body::after {
+    content: '';
+    position: fixed;
+    top: -30%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 600px;
+    height: 400px;
+    background: radial-gradient(ellipse, rgba(79,158,255,0.08) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .page {
+    position: relative;
+    z-index: 1;
+    max-width: 820px;
+    margin: 0 auto;
+    padding: 3rem 1.5rem 5rem;
+  }
+
+  /* Topo */
+  .top-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(79,158,255,0.08);
+    border: 1px solid rgba(79,158,255,0.2);
+    border-radius: 4px;
+    padding: 5px 12px;
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--accent2);
+    margin-bottom: 2rem;
+    animation: fadein .6s ease both;
+  }
+  .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green); box-shadow: 0 0 6px var(--green); animation: pulse 2s ease-in-out infinite; }
+
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
+
+  h1 {
+    font-family: 'Space Mono', monospace;
+    font-size: clamp(1.6rem, 4vw, 2.4rem);
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1.2;
+    letter-spacing: -.02em;
+    margin-bottom: .75rem;
+    animation: fadein .7s .1s ease both;
+  }
+
+  h1 span { color: var(--accent); }
+
+  .subtitle {
+    font-size: .95rem;
+    color: var(--muted2);
+    line-height: 1.7;
+    max-width: 520px;
+    margin-bottom: 2.5rem;
+    animation: fadein .7s .2s ease both;
+  }
+
+  /* Alerta principal */
+  .alert-main {
+    background: var(--surface);
+    border: 1px solid var(--border2);
+    border-left: 3px solid var(--amber);
+    border-radius: 8px;
+    padding: 14px 18px;
+    font-size: .875rem;
+    color: var(--muted2);
+    margin-bottom: 2.5rem;
+    line-height: 1.6;
+    animation: fadein .7s .3s ease both;
+  }
+  .alert-main strong { color: var(--amber); font-weight: 500; }
+
+  /* Seção */
+  .section-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+  /* Grid de teclas */
+  .keys-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 12px;
+    margin-bottom: 2.5rem;
+  }
+
+  .key-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px 18px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    transition: border-color .2s, background .2s, transform .15s;
+    cursor: default;
+    animation: fadein .6s ease both;
+  }
+  .key-card:hover {
+    border-color: var(--border2);
+    background: var(--surface2);
+    transform: translateY(-2px);
+  }
+
+  .key-badge {
+    min-width: 52px;
+    height: 40px;
+    background: var(--key-bg);
+    border: 1px solid var(--key-border);
+    border-bottom: 3px solid var(--key-shadow);
+    border-radius: 7px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Space Mono', monospace;
+    font-weight: 700;
+    font-size: .82rem;
+    color: var(--accent2);
+    letter-spacing: .02em;
+    flex-shrink: 0;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.04);
+    transition: border-bottom-width .1s, transform .1s;
+  }
+  .key-card:hover .key-badge {
+    border-bottom-width: 1px;
+    transform: translateY(2px);
+  }
+
+  .key-info { flex: 1; min-width: 0; }
+  .key-brands {
+    font-size: .88rem;
+    color: var(--text);
+    font-weight: 400;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .key-note {
+    font-size: .75rem;
+    color: var(--muted);
+    margin-top: 3px;
+  }
+
+  /* Destaque especial F12 */
+  .key-card.special {
+    border-color: rgba(79,158,255,0.2);
+    background: rgba(79,158,255,0.04);
+  }
+  .key-card.special .key-badge {
+    border-color: rgba(79,158,255,0.4);
+    color: var(--accent);
+  }
+
+  /* Bloco de dica */
+  .tip-block {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px 22px;
+    margin-bottom: 2rem;
+    animation: fadein .7s .4s ease both;
+  }
+  .tip-header {
+    font-family: 'Space Mono', monospace;
+    font-size: .8rem;
+    color: var(--green);
+    font-weight: 700;
+    letter-spacing: .06em;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .tip-header::before { content: '→'; }
+  .tip-list { list-style: none; display: flex; flex-direction: column; gap: 9px; }
+  .tip-list li {
+    font-size: .875rem;
+    color: var(--muted2);
+    padding-left: 18px;
+    position: relative;
+    line-height: 1.6;
+  }
+  .tip-list li::before {
+    content: '·';
+    position: absolute;
+    left: 4px;
+    color: var(--accent);
+    font-size: 1.1rem;
+    line-height: 1.2;
+  }
+  .tip-list li strong { color: var(--text); font-weight: 500; }
+
+  /* Timeline de boot */
+  .timeline {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    margin-bottom: 2.5rem;
+    animation: fadein .7s .5s ease both;
+  }
+  .tl-item {
+    display: flex;
+    gap: 16px;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .tl-item:last-child { border-bottom: none; }
+  .tl-num {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: 1px solid var(--border2);
+    background: var(--surface);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Space Mono', monospace;
+    font-size: .7rem;
+    color: var(--accent);
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .tl-body strong { display: block; font-size: .9rem; color: var(--text); font-weight: 500; margin-bottom: 3px; }
+  .tl-body span { font-size: .82rem; color: var(--muted2); line-height: 1.6; }
+
+  /* Rodapé */
+  .footer {
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    animation: fadein .7s .6s ease both;
+  }
+  .footer-left { font-family: 'Space Mono', monospace; font-size: .75rem; color: var(--muted); }
+  .footer-left span { color: var(--accent2); }
+  .footer-right { font-size: .8rem; color: var(--muted); }
+
+  @keyframes fadein { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* Animação escalonada dos cards */
+  .key-card:nth-child(1) { animation-delay: .35s; }
+  .key-card:nth-child(2) { animation-delay: .4s; }
+  .key-card:nth-child(3) { animation-delay: .45s; }
+  .key-card:nth-child(4) { animation-delay: .5s; }
+  .key-card:nth-child(5) { animation-delay: .55s; }
+  .key-card:nth-child(6) { animation-delay: .6s; }
+
+  @media (max-width: 520px) {
+    .keys-grid { grid-template-columns: 1fr; }
+    .footer { flex-direction: column; align-items: flex-start; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="top-badge">
+    <div class="dot"></div>
+    Guia de Referência · Atendimento e Suporte ao Usuário
+  </div>
+
+  <h1>Como acessar a <span>BIOS</span></h1>
+  <p class="subtitle">Teclas de inicialização por fabricante. Use este guia durante o atendimento para identificar rapidamente como entrar na configuração da BIOS do equipamento do cliente.</p>
+
+  <div class="alert-main">
+    <strong>⚠ Atenção:</strong> A tecla deve ser pressionada <strong>logo após ligar o computador</strong>, antes do sistema operacional começar a carregar. Se o Windows já aparecer, reinicie e tente novamente.
+  </div>
+
+  <div class="section-label">Teclas por fabricante</div>
+
+  <div class="keys-grid">
+    <div class="key-card">
+      <div class="key-badge">DEL</div>
+      <div class="key-info">
+        <div class="key-brands">ASUS · MSI · Gigabyte</div>
+        <div class="key-note">Desktops e placas-mãe</div>
+      </div>
+    </div>
+    <div class="key-card">
+      <div class="key-badge">F2</div>
+      <div class="key-info">
+        <div class="key-brands">Dell · Lenovo · ASUS</div>
+        <div class="key-note">Notebooks e ultrabooks</div>
+      </div>
+    </div>
+    <div class="key-card">
+      <div class="key-badge">F10</div>
+      <div class="key-info">
+        <div class="key-brands">HP</div>
+        <div class="key-note">Desktops e notebooks HP</div>
+      </div>
+    </div>
+    <div class="key-card">
+      <div class="key-badge">F1</div>
+      <div class="key-info">
+        <div class="key-brands">Lenovo ThinkPad</div>
+        <div class="key-note">Linha ThinkPad corporativa</div>
+      </div>
+    </div>
+    <div class="key-card">
+      <div class="key-badge">ESC</div>
+      <div class="key-info">
+        <div class="key-brands">Alguns HPs</div>
+        <div class="key-note">Abre menu de inicialização</div>
+      </div>
+    </div>
+    <div class="key-card special">
+      <div class="key-badge">F12</div>
+      <div class="key-info">
+        <div class="key-brands">Menu de boot direto</div>
+        <div class="key-note">Escolha o dispositivo sem entrar na BIOS</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-label">O que acontece ao ligar</div>
+
+  <div class="timeline">
+    <div class="tl-item">
+      <div class="tl-num">1</div>
+      <div class="tl-body">
+        <strong>Computador é ligado</strong>
+        <span>A BIOS é o primeiro programa a rodar — está gravada num chip da placa-mãe.</span>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-num">2</div>
+      <div class="tl-body">
+        <strong>POST — Power-On Self-Test</strong>
+        <span>Testa memória RAM, processador, discos e outros componentes. Bips indicam erros.</span>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-num">3</div>
+      <div class="tl-body">
+        <strong>Janela de acesso à BIOS</strong>
+        <span>Breve momento em que a tecla deve ser pressionada. Pode ser menos de 2 segundos.</span>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-num">4</div>
+      <div class="tl-body">
+        <strong>Boot do sistema operacional</strong>
+        <span>Se a tecla não foi pressionada, o Windows (ou outro SO) começa a carregar normalmente.</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-label">Dicas para o atendimento</div>
+
+  <div class="tip-block">
+    <div class="tip-header">Procedimento recomendado</div>
+    <ul class="tip-list">
+      <li>Sempre pergunte ao cliente a <strong>marca e modelo exato</strong> do equipamento antes de indicar a tecla.</li>
+      <li>Em caso de dúvida, tente <strong>DEL e F2</strong> — cobrem a maioria dos equipamentos do mercado.</li>
+      <li>A tecla <strong>F12</strong> abre o menu de boot sem entrar nas configurações — ideal para boot por pen drive sem risco de alterar a BIOS.</li>
+      <li>Se o acesso estiver bloqueado por senha, <strong>não tente adivinhar</strong> — há limite de tentativas em muitos firmwares.</li>
+      <li>Anote as configurações originais da BIOS <strong>antes de qualquer alteração</strong>. Uma foto da tela já resolve.</li>
+      <li>BIOS e <strong>UEFI</strong> são a mesma coisa na prática do atendimento — UEFI é apenas a versão mais moderna.</li>
+    </ul>
+  </div>
+
+  <div class="footer">
+    <div class="footer-left">BIOS / UEFI · <span>Guia de Atendimento</span> · 2026</div>
+    <div class="footer-right">Atendimento e Suporte ao Usuário — 1º Ano Técnico</div>
+  </div>
+
+</div>
+</body>
+</html>
