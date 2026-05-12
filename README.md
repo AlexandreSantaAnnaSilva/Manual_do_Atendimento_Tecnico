@@ -3,8 +3,7 @@
 Este projeto é uma página web simples e funcional que serve como um guia de referência rápida para teclas de acesso de BIOS de diferentes fabricantes. 
 
 ## 🚀 Demonstração
-Você pode acessar a página online aqui: [CLIQUE AQUI PARA VER O SITE](https://github.io)
-*(Dica: Substitua o link acima pelo link que o GitHub Pages gerou)*
+Você pode acessar a página online aqui: [CLIQUE AQUI PARA VER O SITE](https://alexandresantaannasilva.github.io/Manual_do_Atendimento_Tecnico/)
 
 ## 🛠️ Tecnologias Utilizadas
 * **HTML5**: Estruturação do conteúdo.
